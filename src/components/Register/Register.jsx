@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import auth from "../Firebase/firebase.config";
 import { useState } from "react";
+import { FiEyeOff, FiEye } from 'react-icons/fi';
 
 const Register = () => {
 
@@ -57,12 +58,19 @@ const Register = () => {
             <form onSubmit={handleRegister} className="mt-3 text-center">
                 <input className="p-1 mb-2" type="email" name="email" id="email" placeholder="Email..." required />
                 <br />
-                <input className="p-1 mb-2" 
-                type={ showPassword ? "text": "password"  } 
-                name="password" id="pass" placeholder="Password..." required />
+                <div className="flex mx-auto justify-center items-center">
+                    <input className="p-1 mb-2"
+                        type={showPassword ? "text" : "password"}
+                        name="password" id="pass" placeholder="Password..." required />
 
-                {/* show te click korle setshowpass call kore showpass ar man change kore dibe */}
-                <span onClick={ () => setShowPassword(!showPassword)}>Show</span>
+                    {/* show te click korle setshowpass call kore showpass ar man change kore dibe */}
+                    <span onClick={() => setShowPassword(!showPassword)}>
+                        {
+                            showPassword ? <FiEyeOff></FiEyeOff> : <FiEye></FiEye>
+                        }
+                    </span>
+                </div>
+
                 <br />
                 <input className="btn btn-primary mb-3" type="submit" value="Register" />
             </form>
