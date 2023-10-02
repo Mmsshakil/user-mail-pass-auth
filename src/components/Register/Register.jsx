@@ -23,6 +23,14 @@ const Register = () => {
         // reset success
         setSuccess('');
 
+        // password check
+        if (password.length < 6) {
+            setRegisterError('Password should be at least 6 characters');
+            return;
+        }
+
+
+
         // user creating
         createUserWithEmailAndPassword(auth, email, password)
             .then(result => {
@@ -41,18 +49,18 @@ const Register = () => {
             <h2 className="text-2xl">Register here</h2>
 
             <form onSubmit={handleRegister} className="mt-3 text-center">
-                <input className="p-1 mb-2" type="email" name="email" id="email" placeholder="Email..." />
+                <input className="p-1 mb-2" type="email" name="email" id="email" placeholder="Email..." required />
                 <br />
-                <input className="p-1 mb-2" type="password" name="password" id="pass" placeholder="Password..." />
+                <input className="p-1 mb-2" type="password" name="password" id="pass" placeholder="Password..." required />
                 <br />
                 <input className="btn btn-primary mb-3" type="submit" value="Register" />
             </form>
 
             {
-                registerError && <p className="text-red-700 text-2xl mb-3">{registerError}</p>
+                registerError && <p className="text-red-700 text-xl mb-3">{registerError}</p>
             }
             {
-                success && <p>{success}</p>
+                success && <p className="text-green-700 text-xl mb-3">{success}</p>
             }
 
         </div>
