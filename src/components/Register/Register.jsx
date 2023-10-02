@@ -8,6 +8,9 @@ const Register = () => {
     // error showing
     const [registerError, setRegisterError] = useState('');
 
+    // seccess showing
+    const [success, setSuccess] = useState('');
+
     const handleRegister = e => {
         e.preventDefault();
         const email = e.target.email.value;
@@ -17,10 +20,14 @@ const Register = () => {
         // reset error
         setRegisterError('');
 
+        // reset success
+        setSuccess('');
+
         // user creating
         createUserWithEmailAndPassword(auth, email, password)
             .then(result => {
                 console.log(result.user);
+                setSuccess('Success Registration');
             })
             .catch(error => {
                 console.log(error.message);
@@ -42,7 +49,10 @@ const Register = () => {
             </form>
 
             {
-                registerError && <p className="text-red-700 text-2xl mb-3">{registerError}</p> 
+                registerError && <p className="text-red-700 text-2xl mb-3">{registerError}</p>
+            }
+            {
+                success && <p>{success}</p>
             }
 
         </div>
