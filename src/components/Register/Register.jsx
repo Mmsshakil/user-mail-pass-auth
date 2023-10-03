@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import auth from "../Firebase/firebase.config";
 import { useState } from "react";
 import { FiEyeOff, FiEye } from 'react-icons/fi';
@@ -24,7 +24,7 @@ const Register = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
         const terms = e.target.terms.checked;
-        
+
         console.log(terms);
 
         // reset error
@@ -38,7 +38,7 @@ const Register = () => {
             setRegisterError('Password must include at least one uppercase letter (A-Z), one lowercase letter (a-z), one special symbol, and one digit (0-9).');
             return;
         }
-        else if(!terms){
+        else if (!terms) {
             setRegisterError('Accept our Terms and Conditons');
             return;
         }
@@ -50,6 +50,12 @@ const Register = () => {
             .then(result => {
                 console.log(result.user);
                 setSuccess('Success Registration');
+
+                // email verification mails sent
+                sendEmailVerification(auth.currentUser)
+                .then(() =>{
+                    alert('Please verify the mail');
+                })
             })
             .catch(error => {
                 console.log(error.message);
@@ -80,8 +86,8 @@ const Register = () => {
 
                 <br />
                 <div>
-                        <input type="checkbox" name="terms" id="terms" />
-                        <label className="ml-2" htmlFor="terms">Accept our <a href="">Terms and Conditions</a></label>
+                    <input type="checkbox" name="terms" id="terms" />
+                    <label className="ml-2" htmlFor="terms">Accept our <a href="">Terms and Conditions</a></label>
                 </div>
                 <br />
                 <input className="btn btn-primary mb-3" type="submit" value="Register" />

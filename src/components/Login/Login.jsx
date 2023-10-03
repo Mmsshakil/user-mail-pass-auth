@@ -15,7 +15,7 @@ const Login = () => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
-        // console.log(email, password);
+        console.log(e);
 
 
         // login error reset
@@ -25,8 +25,16 @@ const Login = () => {
 
         signInWithEmailAndPassword(auth, email, password)
             .then(result => {
-                // console.log(result, 'success');
-                setLoginError('success');
+                console.log(result);
+
+                // checking the mail verification
+                if (result.user.emailVerified) {
+                    setLoginError("Login successful");
+                }
+                else {
+                    alert('Please verify the mail ');
+                    return;
+                }
             })
             .catch(error => {
                 // console.log(error.message);
@@ -39,7 +47,7 @@ const Login = () => {
         const email = emailRef.current.value;
         const emailRegex = /[\w.-]+@[\w.-]+\.[a-zA-Z]{2,4}/g;
 
-        if(!email.match(emailRegex)){
+        if (!email.match(emailRegex)) {
             console.log('provide a valid email');
             return;
         }
@@ -48,12 +56,12 @@ const Login = () => {
 
         // sent velidation message to the mail
         sendPasswordResetEmail(auth, email)
-        .then(() => {
-            alert('Reset password message sent');
-        })
-        .catch(error =>{
-            console.log(error);
-        })
+            .then(() => {
+                alert('Check your email');
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     return (
@@ -83,7 +91,7 @@ const Login = () => {
                         </div>
 
                         {
-                            loginError && <p className="text-center">{loginError}</p>
+                            loginError && <p className="text-center text-xl text-green-700">{loginError}</p>
                         }
 
                         <div className="form-control mt-6">
